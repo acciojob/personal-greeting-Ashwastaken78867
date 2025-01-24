@@ -1,38 +1,45 @@
-
-import React, { useState } from "react";
+import React, { Component } from "react";
 import "./../styles/App.css";
 
-const App = () => {
-  const [name, setName] = useState("");
-  const [greeting, setGreeting] = useState("");
+class App extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      name: "",
+      greeting: "",
+    };
+  }
 
-  const handleInputChange = (event) => {
-    setName(event.target.value); // Update the name as the user types
+  handleInputChange = (event) => {
+    this.setState({ name: event.target.value });
   };
 
-  const handleSubmit = () => {
+  handleSubmit = () => {
+    const { name } = this.state;
     if (name.trim() === "") {
-      setGreeting("Please enter a valid name."); // Handle empty input
+      this.setState({ greeting: "Please enter a valid name." });
     } else {
-      setGreeting(`Hello, ${name}!`); // Display personalized greeting
+      this.setState({ greeting: `Hello, ${name}!` });
     }
   };
 
-  return (
-    <div>
-      <p>Enter your name:</p>
-      <input
-        type="text"
-        placeholder="Enter the name"
-        value={name}
-        onChange={handleInputChange}
-      />
-      <button onClick={handleSubmit}>Submit</button>
-      {greeting && <p>{greeting}</p>} {/* Display greeting only if it's set */}
-      {/* Do not remove the main div */}
-    </div>
-  );
-};
+  render() {
+    return (
+      <div>
+        <p>Enter your name:</p>
+        <input
+          type="text"
+          placeholder="Enter the name"
+          value={this.state.name}
+          onChange={this.handleInputChange}
+        />
+        <button onClick={this.handleSubmit}>Submit</button>
+        {this.state.greeting && <p>{this.state.greeting}</p>}
+      </div>
+    );
+  }
+}
 
 export default App;
+
 
